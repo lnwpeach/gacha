@@ -1,5 +1,13 @@
 <?php
-include('db.php');
+session_start();
+
+$answer = ['success' => 0, 'message' => ''];
+if(!isset($_POST['json'])) {
+    $answer['message'] = "Error: no data";
+    exit(json_encode($answer));
+}
+
+$data = json_decode($_POST['json'], true);
 
 // ---------------------------------------------------
 
@@ -24,17 +32,21 @@ function random($chance) {
 
 $round = (int)$data['round'];
 
-$reward_arr = [];
-for($i = 0; $i < $round; $i++) {
-    $reward = random($chance);
-
-    if(isset($reward_arr[$reward]))
-        $reward_arr[$reward]++;
-    else
-        $reward_arr[$reward] = 1;
+$reward = [];
+foreach($chance as $k => $v) {
+    $reward[$k] = 0;
 }
 
-$answer['reward_arr'] = $reward_arr;
+for($i = 0; $i < $round; $i++) {
+    $item = random($chance);
+
+    if(isset($reward[$item]))
+        $reward[$item]++;
+    else
+        $reward[$item] = 1;
+}
+
+$answer['reward'] = $reward;
 $answer['success'] = 1;
 $answer['message'] = 'Success';
 exit(json_encode($answer));

@@ -19,6 +19,8 @@ if( !(isset($_GET['h']) && $_GET['h'] == 'abd95192953f0d55134f07404259652402b84b
         <option>300</option>
         <option>500</option>
         <option>1000</option>
+        <option>3000</option>
+        <option>5000</option>
     </select>
     <button onclick='generate()' style='margin-left:20px;'>Generate</button>
     <br>
